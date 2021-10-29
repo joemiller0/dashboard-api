@@ -1,6 +1,6 @@
 CREATE DATABASE dashboard;
 
-CREATE TABLE log(
+CREATE TABLE logs(
     lid SERIAL PRIMARY KEY, 
     body TEXT, 
     date DATE, 
