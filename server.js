@@ -37,11 +37,13 @@ app.get("/logs/:id", async(req, res)=>{
 //Create Log
 app.post("/logs", async(req, res) => {
     try {
+        console.log(req.body)
         const { body } = req.body;
         const { date } = req.body;
         const { time } = req.body;
-        const newLog = await pool.query("INSERT INTO logs (body, date, time) VALUES($1, $2, $3) RETURNING *", 
-        [body, date, time])
+        const { stravaLog } = req.body;
+        const newLog = await pool.query("INSERT INTO logs (body, date, time, stravaLog) VALUES($1, $2, $3, $4) RETURNING *", 
+        [body, date, time, stravaLog])
 
         res.json(newLog.rows);
     } catch (err) {
@@ -56,9 +58,10 @@ app.put("/logs/:id", async(req, res)=>{
         const { body } = req.body;
         const { date } = req.body;
         const { time } = req.body;
+        const { stravaLog } = req.body;
 
-        await pool.query("UPDATE logs SET body = $1, date = $2, time = $3 WHERE lid = $4;", 
-        [body, date, time, id])
+        await pool.query("UPDATE logs SET body = $1, date = $2, time = $3, stravaLog = $4 WHERE lid = $5;", 
+        [body, date, time, stravaLog, id])
 
         res.json("Updated")
     } catch (err) {

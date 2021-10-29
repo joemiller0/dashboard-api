@@ -4,5 +4,6 @@ CREATE TABLE logs(
     lid SERIAL PRIMARY KEY, 
     body TEXT, 
     date DATE, 
-    time TIME
+    time TIME,
+    stravaLog TEXT
 );
