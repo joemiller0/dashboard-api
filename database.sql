@@ -6,5 +6,5 @@ CREATE TABLE logs(
     body TEXT, 
     date DATE, 
     time TIME,
-    stravaLog TEXT
+    stravaLog json
 );
