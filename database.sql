@@ -1,8 +1,7 @@
 CREATE DATABASE dashboard;
 
 CREATE TABLE logs(
-    lid SERIAL PRIMARY KEY, 
-    upload_id BIGINT,
+    lid BIGINT PRIMARY KEY, 
     body TEXT, 
     date DATE, 
     time TIME,

@@ -41,10 +41,10 @@ app.post("/logs", async(req, res) => {
         const { date } = req.body;
         const { time } = req.body;
         const { stravaLog } = req.body;
-        const { upload_id } = req.body;
+        const { lid } = req.body;
 
-        const newLog = await pool.query("INSERT INTO logs (body, date, time, stravaLog, upload_id) VALUES($1, $2, $3, $4, $5) RETURNING *", 
-        [body, date, time, stravaLog, upload_id])
+        const newLog = await pool.query("INSERT INTO logs (body, date, time, stravaLog, lid) VALUES($1, $2, $3, $4, $5) RETURNING *", 
+        [body, date, time, stravaLog, lid])
 
         res.json(newLog.rows);
     } catch (err) {
@@ -63,7 +63,7 @@ app.put("/logs/:id", async(req, res)=>{
         const { upload_id } = req.body;
 
         await pool.query("UPDATE logs SET body = $1, date = $2, time = $3, stravaLog = $4 WHERE lid = $5;", 
-        [body, date, time, stravaLog, id, upload_id])
+        [body, date, time, stravaLog, id])
 
         res.json("Updated")
     } catch (err) {
