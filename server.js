@@ -60,7 +60,6 @@ app.put("/logs/:id", async(req, res)=>{
         const { date } = req.body;
         const { time } = req.body;
         const { stravaLog } = req.body;
-        const { upload_id } = req.body;
 
         await pool.query("UPDATE logs SET body = $1, date = $2, time = $3, stravaLog = $4 WHERE lid = $5;", 
         [body, date, time, stravaLog, id])
