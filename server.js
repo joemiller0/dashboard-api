@@ -34,6 +34,28 @@ app.get("/logs/:id", async(req, res)=>{
     }
 })
 
+// duplicate key value violates unique constraint "logs_pkey" 
+//Import Logs
+app.post("/import", async(req, res) => {
+    try {
+        const { body } = req.body;
+        const { date } = req.body;
+        const { time } = req.body;
+        const { stravaLog } = req.body;
+        const { lid } = req.body;
+
+        const newLog = await pool.query("INSERT INTO logs (body, date, time, stravaLog, lid) VALUES($1, $2, $3, $4, $5) RETURNING *", 
+        [body, date, time, stravaLog, lid])
+
+        res.json(newLog.rows);
+    } catch (err) {
+        console.log(err.message);
+        if (err.message ='duplicate key value violates unique constraint "logs_pkey"'){
+            res.json('boop')
+        }
+    }
+})
+
 //Create Log
 app.post("/logs", async(req, res) => {
     try {
@@ -48,7 +70,7 @@ app.post("/logs", async(req, res) => {
 
         res.json(newLog.rows);
     } catch (err) {
-        console.error(err.message);
+        console.log(err.message);
     }
 })
 
