@@ -34,7 +34,6 @@ app.get("/logs/:id", async(req, res)=>{
     }
 })
 
-// duplicate key value violates unique constraint "logs_pkey" 
 //Import Logs
 app.post("/import", async(req, res) => {
     try {
