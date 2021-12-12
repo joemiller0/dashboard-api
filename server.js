@@ -66,7 +66,7 @@ app.post("/logs", async(req, res) => {
 
         const newLog = await pool.query("INSERT INTO logs (body, date, time, stravaLog, lid) VALUES($1, $2, $3, $4, $5) RETURNING *", 
         [body, date, time, stravaLog, lid])
-
+        
         res.json(newLog.rows);
     } catch (err) {
         console.log(err.message);
