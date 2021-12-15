@@ -27,7 +27,7 @@ app.get("/logs", async(req, res)=>{
 app.get("/logs/:id", async(req, res)=>{
     try {
         const {id} = req.params;
-        const log = await pool.query("SELECT * FROM logs WHERE todo_id = $1", [id])
+        const log = await pool.query("SELECT * FROM logs WHERE lid = $1", [id])
         res.json(log.rows)
     } catch (err) {
         console.log(err.message)
@@ -37,14 +37,14 @@ app.get("/logs/:id", async(req, res)=>{
 //Import Logs
 app.post("/import", async(req, res) => {
     try {
+        const { lid } = req.body;
         const { body } = req.body;
         const { date } = req.body;
         const { time } = req.body;
         const { stravaLog } = req.body;
-        const { lid } = req.body;
 
-        const newLog = await pool.query("INSERT INTO logs (body, date, time, stravaLog, lid) VALUES($1, $2, $3, $4, $5) RETURNING *", 
-        [body, date, time, stravaLog, lid])
+        const newLog = await pool.query("INSERT INTO logs (lid, body, date, time, stravaLog) VALUES($1, $2, $3, $4, $5) RETURNING *", 
+        [lid, body, date, time, stravaLog])
 
         res.json(newLog.rows);
     } catch (err) {
