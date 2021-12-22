@@ -97,7 +97,7 @@ app.put("/logs/:id", async(req, res)=>{
 app.delete("/logs/:id", async(req, res)=>{
     try {
         const { id } = req.params;
-        await pool.query("DELETE FROM logs WHERE lid = $1", [id])
+        await pool.query("DELETE FROM logs WHERE id = $1", [id])
         res.json("Deleted")
     } catch (err) {
         console.log(err.message)
