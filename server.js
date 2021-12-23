@@ -23,6 +23,17 @@ app.get("/logs", async(req, res)=>{
     }
 })
 
+//Programs
+app.get("/programs", async(req, res)=>{
+    try {
+        const allPrograms = await pool.query("SELECT * FROM programs")
+        res.json(allPrograms.rows)
+    } catch (err) {
+        console.log(err.message)
+    }
+})
+
+
 //One Log
 app.get("/logs/:id", async(req, res)=>{
     try {
@@ -75,23 +86,41 @@ app.post("/logs", async(req, res) => {
     }
 })
 
-//Update Log
-app.put("/logs/:id", async(req, res)=>{
+//Create Program
+app.post("/programs", async(req, res) => {
     try {
-        const { id } = req.params;
-        const { body } = req.body;
-        const { date } = req.body;
-        const { time } = req.body;
-        const { stravaLog } = req.body;
+        const { title } = req.body;
+        const { start_date } = req.body;
+        const { end_date } = req.body;
+        const { description } = req.body;
+        const { workouts } = req.body;
 
-        await pool.query("UPDATE logs SET body = $1, date = $2, time = $3, stravaLog = $4 WHERE lid = $5;", 
-        [body, date, time, stravaLog, id])
-
-        res.json("Updated")
+        const newProgram = await pool.query("INSERT INTO logs (title, start_date, end_date, description, workouts) VALUES($1, $2, $3, $4, $5) RETURNING *", 
+        [title, start_date, end_date, description, workouts])
+        
+        res.json(newProgram.rows);
     } catch (err) {
-        console.log(err.message)
+        console.log(err.message);
     }
 })
+
+//Update Log
+// app.put("/logs/:id", async(req, res)=>{
+//     try {
+//         const { id } = req.params;
+//         const { body } = req.body;
+//         const { date } = req.body;
+//         const { time } = req.body;
+//         const { stravaLog } = req.body;
+
+//         await pool.query("UPDATE logs SET body = $1, date = $2, time = $3, stravaLog = $4 WHERE lid = $5;", 
+//         [body, date, time, stravaLog, id])
+
+//         res.json("Updated")
+//     } catch (err) {
+//         console.log(err.message)
+//     }
+// })
 
 //Delete Log
 app.delete("/logs/:id", async(req, res)=>{
