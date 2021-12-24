@@ -18,3 +18,12 @@ CREATE TABLE programs(
     description TEXT, 
     workouts json
 );
+
+CREATE TABLE workouts(
+    id SERIAL PRIMARY KEY,
+    title TEXT,
+    description TEXT,
+    program INT
+);
+
+-- join tables needed here on next update

@@ -33,6 +33,16 @@ app.get("/programs", async(req, res)=>{
     }
 })
 
+//Workouts
+app.get("/workouts", async(req, res)=>{
+    try {
+        const allWorkouts = await pool.query("SELECT * FROM workouts")
+        res.json(allWorkouts.rows)
+    } catch (err) {
+        console.log(err.message)
+    }
+})
+
 
 //One Log
 app.get("/logs/:id", async(req, res)=>{
