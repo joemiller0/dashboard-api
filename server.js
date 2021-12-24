@@ -95,7 +95,7 @@ app.post("/programs", async(req, res) => {
         const { description } = req.body;
         const { workouts } = req.body;
 
-        const newProgram = await pool.query("INSERT INTO logs (title, start_date, end_date, description, workouts) VALUES($1, $2, $3, $4, $5) RETURNING *", 
+        const newProgram = await pool.query("INSERT INTO programs (title, start_date, end_date, description, workouts) VALUES($1, $2, $3, $4, $5) RETURNING *", 
         [title, start_date, end_date, description, workouts])
         
         res.json(newProgram.rows);
