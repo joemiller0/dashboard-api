@@ -15,15 +15,14 @@ CREATE TABLE programs(
     title TEXT,
     start_date DATE, 
     end_date DATE, 
-    description TEXT, 
-    workouts json
+    description TEXT
 );
 
 CREATE TABLE workouts(
     id SERIAL PRIMARY KEY,
     title TEXT,
     description TEXT,
-    program INT
+    program_id INT
 );
 
--- join tables needed here on next update
+-- may need some sort of join at some point
