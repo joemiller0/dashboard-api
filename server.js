@@ -103,12 +103,27 @@ app.post("/programs", async(req, res) => {
         const { start_date } = req.body;
         const { end_date } = req.body;
         const { description } = req.body;
-        const { workouts } = req.body;
 
-        const newProgram = await pool.query("INSERT INTO programs (title, start_date, end_date, description, workouts) VALUES($1, $2, $3, $4, $5) RETURNING *", 
-        [title, start_date, end_date, description, workouts])
+        const newProgram = await pool.query("INSERT INTO programs (title, start_date, end_date, description) VALUES($1, $2, $3, $4) RETURNING *", 
+        [title, start_date, end_date, description])
         
         res.json(newProgram.rows);
+    } catch (err) {
+        console.log(err.message);
+    }
+})
+
+//Create Workout
+app.post("/workouts", async(req, res) => {
+    try {
+        const { title } = req.body;
+        const { description } = req.body;
+        const { program_id } = req.body;
+
+        const newWorkout = await pool.query("INSERT INTO workouts (title, description, program_id) VALUES($1, $2, $3) RETURNING *", 
+        [title, description, program_id])
+        
+        res.json(newWorkout.rows);
     } catch (err) {
         console.log(err.message);
     }
